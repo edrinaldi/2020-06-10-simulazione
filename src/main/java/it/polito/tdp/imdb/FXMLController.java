@@ -5,8 +5,10 @@
 package it.polito.tdp.imdb;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.imdb.model.Actor;
 import it.polito.tdp.imdb.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,10 +37,10 @@ public class FXMLController {
     private Button btnSimulazione; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxGenere"
-    private ComboBox<?> boxGenere; // Value injected by FXMLLoader
+    private ComboBox<String> boxGenere; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxAttore"
-    private ComboBox<?> boxAttore; // Value injected by FXMLLoader
+    private ComboBox<Actor> boxAttore; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtGiorni"
     private TextField txtGiorni; // Value injected by FXMLLoader
@@ -48,12 +50,54 @@ public class FXMLController {
 
     @FXML
     void doAttoriSimili(ActionEvent event) {
-
+    	// pulisco l'area di testo
+    	this.txtResult.clear();
+    	
+    	// verifico il grafo
+    	if(!this.model.grafoCreato()) {
+    		// stampo errore ed esco
+    		this.txtResult.setText("Errore: devi prima creare il grafo!");
+    		return;
+    	}
+    	
+    	// verifico l'attore
+    	Actor a = this.boxAttore.getValue();
+    	if(a == null) {
+    		// stampo errore ed esco
+    		this.txtResult.setText("Errore: devi prima selezionare un attore!");
+    		return;
+    	}
+    	
+    	// trovo gli attori simili
+    	List<Actor> simili = this.model.trovaAttoriSimili(a);
+    	
+    	// stampo il risultato
+    	this.txtResult.setText("ATTORI SIMILI A: " + a.toString() + "\n");
+    	for(Actor s : simili) {
+        	this.txtResult.appendText(s.toString() + "\n");
+    	}
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	// pulisco l'area di testo
+    	this.txtResult.clear();
+    	
+    	// verifico il genere
+    	String genre = this.boxGenere.getValue();
+    	if(genre == null) {
+    		// stampo errore ed esco
+    		this.txtResult.setText("Errore: devi prima selezionare un genere!");
+    		return;
+    	}
+    	
+    	// creo il grafo e stampo il messaggio
+    	String msg = this.model.creaGrafo(genre);
+    	this.txtResult.setText(msg);
+    	
+    	// pulisco e riempio la tendina degli attori
+    	this.boxAttore.getItems().clear();
+    	this.boxAttore.getItems().addAll(this.model.getVertici());
     }
 
     @FXML
