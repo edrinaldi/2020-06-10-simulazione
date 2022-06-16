@@ -1,0 +1,31 @@
+processEvent(e):
+- case evento INTERVISTA
+	- if(stesso genere del giorno prima && 90% probabilità)
+		- carico una PAUSA il giorno seguente
+		- return;
+	- if(60% probabilità)
+		- attore casuale
+	- else
+		- attore consigliato
+	- carico un'INTERVISTA il giorno seguente
+- case evento PAUSA
+	- attore casuale
+	- carico un'INTERVISTA il giorno seguente
+	
+selezionaCasuale(attori):
+- do
+	- calcolo indice casuale
+	- trovo l'attore corrispondente
+	- while(attore non intervistato)
+
+consigliaAttore(precedente):
+- trovo i colleghi dell'ultimo attore intervistato
+- if(non ce ne sono)
+	- attore causale
+	- return;
+- cerco il grado massimo
+- cerco quelli con grado massimo
+- scelgo casuale tra di essi
+
+
+	

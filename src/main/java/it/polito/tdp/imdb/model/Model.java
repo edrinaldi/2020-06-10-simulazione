@@ -18,6 +18,7 @@ public class Model {
 	private ImdbDAO dao;
 	private Map<Integer, Actor> idMap;
 	private Graph<Actor, DefaultWeightedEdge> grafo;
+	private Simulator sim;
 	
 	public Model() {
 		this.dao = new ImdbDAO();
@@ -50,6 +51,12 @@ public class Model {
 		Collections.sort(simili);
 		return simili;
 	}
+	
+	public void simula(int n) {
+		this.sim = new Simulator(this.grafo);
+		this.sim.init(n);
+		this.sim.run();
+	}
 
 	public List<String> getAllGeneri() {
 		// TODO Auto-generated method stub
@@ -65,6 +72,16 @@ public class Model {
 	
 	public boolean grafoCreato() {
 		return (this.grafo != null);
+	}
+
+	public List<Actor> getInvervistati() {
+		// TODO Auto-generated method stub
+		return this.sim.getIntervistati();
+	}
+
+	public int getnPause() {
+		// TODO Auto-generated method stub
+		return this.sim.getnPause();
 	}
 
 }
