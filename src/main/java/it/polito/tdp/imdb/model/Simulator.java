@@ -104,7 +104,7 @@ public class Simulator {
 			if(Math.random() < 0.6) {
 				
 				// scelgo il prossimo attore in modo casuale
-				attore = this.selezionaCasuale(this.daIntervistare);	// TODO aggiungere parametro
+				attore = this.selezionaCasuale(this.daIntervistare);
 			}
 			else {
 				
